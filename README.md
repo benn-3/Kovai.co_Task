@@ -1,432 +1,338 @@
-# 📋 TaskFlow — Production Task Management Application
+# TaskFlow — Task Management Application
 
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
-[![Python](https://img.shields.io/badge/Python-3.12+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=flat&logo=react&logoColor=black)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-6+-646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev)
-[![MongoDB Atlas](https://img.shields.io/badge/MongoDB-Atlas%20%2F%20PyMongo-47A248.svg?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com)
-[![Google OAuth](https://img.shields.io/badge/Auth-Google%20OAuth%202.0%20%2B%20JWT-4285F4.svg?style=flat&logo=google&logoColor=white)](https://developers.google.com/identity)
-[![Styling](https://img.shields.io/badge/UI-Glassmorphism%20%2B%20Design%20System-8A2BE2.svg?style=flat)](https://developer.mozilla.org)
-[![WCAG](https://img.shields.io/badge/Accessibility-WCAG%20AA%20Compliant-success.svg?style=flat)](https://www.w3.org/WAI/standards-guidelines/wcag/)
-
-> **TaskFlow** is a modern, full-stack personal task management platform designed for engineers who demand speed, clarity, and precision. Built with a **FastAPI** Python backend, **React 19** Vite frontend, **MongoDB Atlas** cloud database, dual **Google OAuth 2.0 + JWT** authentication, and a **Glassmorphic UI design system**.
+A production-ready, full-stack Task Management Application with Google Sign-In and email/password authentication, JWT sessions, a FastAPI backend, React frontend, and MongoDB Atlas database.
 
 ---
 
-## 📑 Table of Contents
+## Features
 
-- [✨ Feature Highlights](#-feature-highlights)
-- [🎨 UI & Design Philosophy](#-ui--design-philosophy)
-- [🏛️ System Architecture](#️-system-architecture)
-- [📂 Project Directory Structure](#-project-directory-structure)
-- [🛠️ Tech Stack Specification](#️-tech-stack-specification)
-- [⚡ Quick Start & Installation Guide](#-quick-start--installation-guide)
-  - [1. Prerequisites](#1-prerequisites)
-  - [2. MongoDB Atlas Configuration](#2-mongodb-atlas-configuration)
-  - [3. Google OAuth 2.0 Configuration](#3-google-oauth-20-configuration)
-  - [4. Backend Setup & Run](#4-backend-setup--run)
-  - [5. Frontend Setup & Run](#5-frontend-setup--run)
-- [📡 API Reference](#-api-reference)
-- [🗄️ Database Schema & Security](#️-database-schema--security)
-- [🚀 Production Deployment Guide](#-production-deployment-guide)
-- [🧪 Testing & Verification](#-testing--verification)
+### Core Features
+1. Sign in with Google **or** register/log in with email + password
+2. Create tasks (title required, description + due date optional)
+3. View your task list
+4. Edit task title and description
+5. Delete tasks (with confirmation)
+6. Update task status: **Planned → In Progress → Complete** (any-to-any)
+7. Filter tasks by status
+8. Search tasks by title (client-side)
+9. Toggle sort order (newest/oldest first, client-side)
+10. Status counts displayed (Planned / In Progress / Complete)
+11. Toggle dark mode (persisted in localStorage)
 
----
-
-## ✨ Feature Highlights
-
-### 🎯 Core Task Management
-- **3-Lane Kanban Board**: Structured side-by-side workflow across three definitive states: `Planned`, `In Progress`, and `Complete`.
-- **Fast Task Creation**: Inline form with title, optional rich description, and datetime due date picker.
-- **Full In-Place Editing**: Edit task details directly within card view with form validation.
-- **Accessible Deletion**: Two-step modal confirmation dialog with background blur to prevent accidental deletion.
-- **Status Transitions**: Move tasks seamlessly between any status with instant visual feedback.
-
-### 🔍 Productivity & Controls
-- **Live Instant Search**: Filter tasks dynamically by keyword in title without reloading.
-- **Multi-Directional Sorting**: One-click toggle between `↓ Newest First` and `↑ Oldest First`.
-- **Real-Time Task Counters**: Automatic live counts per lane and total task count.
-- **Overdue Visual Warning**: Automatic highlight badges for incomplete tasks past their deadline.
-- **Smart Empty States**: Contextual guidance for blank boards and lanes (`Nothing planned yet`, `Nothing in progress`).
-
-### 🔐 Authentication & Session Security
-- **Dual Authentication**:
-  - **Google Identity Services (GIS)**: One-tap OAuth 2.0 with cryptographic credential verification.
-  - **Email & Password**: Registration with client-side & server-side regex validation, hashed with `bcrypt` (12 rounds).
-- **Stateless JWT Sessions**: Signed PyJWT tokens (24-hour expiration) stored securely with auto-expiry redirection on 401.
-- **User Data Isolation**: Queries strictly filter by JWT `user_id` — users cannot access or modify tasks belonging to other accounts.
+### Additional Features
+- Overdue task highlighting (due date in the past and status not Complete)
+- JWT auto-expiry detection — redirects to login on expired tokens
+- Loading and error states throughout the UI
+- Accessible, responsive design
 
 ---
 
-## 🎨 UI & Design Philosophy
+## Tech Stack
 
-TaskFlow embraces a **Glassmorphism** design system with a calm, focused workbench aesthetic:
-
-1. **Ambient Gradient Mesh**: A fixed, GPU-accelerated background layer with three soft blurred radial blobs (accent, in-progress amber, complete green) that drift slowly (`±20px`), bringing frosted glass surfaces to life.
-2. **Selective Glass Application**:
-   - **Full Glass (`backdrop-filter: blur(16px)`)**: Sticky navigation bar, desktop auth split-panels, "New task" creator panel, and floating toast confirmations.
-   - **Lighter Glass (`backdrop-filter: blur(8px)`, ~0.82 opacity)**: Task cards for maximum text contrast and 60fps rendering performance.
-   - **Solid Interactive Controls**: Inputs, status selects, and primary buttons remain solid for instant visual affordance.
-3. **Split-Panel Authentication**:
-   - Left panel: Minimalist technical dot-grid texture with brand mark and tagline.
-   - Right panel: Centered sign-in / registration form with Google OAuth and email fallbacks.
-4. **Transient Feedback Toasts**: Clean bottom-right toasts (`Task created`, `Status updated`, `Task deleted`) that auto-dismiss in 2.5 seconds with zero notification noise.
-5. **Theme Engine**: Complete Dark and Light mode support with curated tokens, persistent `localStorage` memory, and Lucide Sun/Moon iconography.
-6. **Strict Accessibility (WCAG AA)**: Clear focus rings, 8px layout grid, and full `prefers-reduced-motion` compliance.
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite, JavaScript, React Router v6, TailwindCSS v3 |
+| Backend | Python 3.12+, FastAPI, Uvicorn, Pydantic v2 |
+| Database | MongoDB Atlas via PyMongo |
+| Authentication | JWT (PyJWT), Google OAuth (google-auth), bcrypt (passlib) |
+| Deployment | Vercel (FE), Render (BE), MongoDB Atlas |
 
 ---
 
-## 🏛️ System Architecture
+## Architecture
 
 ```
-                                  ┌───────────────────────────┐
-                                  │      Client Browser       │
-                                  │   (React 19 + Vite SPA)   │
-                                  └─────────────┬─────────────┘
-                                                │
-                                HTTPS Requests  │  Bearer JWT Authorization
-                                                ▼
-                                  ┌───────────────────────────┐
-                                  │      FastAPI Backend      │
-                                  │      (Uvicorn Engine)     │
-                                  └──────┬─────────────┬──────┘
-                                         │             │
-                    ┌────────────────────┴──┐       ┌──┴────────────────────┐
-                    ▼                       ▼       ▼                       ▼
-            ┌───────────────┐       ┌───────────────┐       ┌───────────────┐
-            │ /api/auth/*   │       │ /api/tasks/*  │       │ Google Auth   │
-            │ Login/Register│       │ CRUD Handlers │       │ API Verify    │
-            └───────┬───────┘       └───────┬───────┘       └───────────────┘
-                    │                       │
-                    └───────────┬───────────┘
-                                │ PyMongo Driver
-                                ▼
-                    ┌───────────────────────────┐
-                    │    MongoDB Atlas Cluster  │
-                    │   Collections: users/tasks│
-                    └───────────────────────────┘
+Browser (React)
+    │
+    │  HTTPS (Axios + Bearer JWT)
+    ▼
+FastAPI (Uvicorn)
+    │
+    ├── /api/auth/*  ── AuthService / UserService / GoogleAuthService
+    │                    └─ Users collection (MongoDB)
+    │
+    └── /api/tasks/* ── TaskService (JWT-protected)
+                         └─ Tasks collection (MongoDB)
 ```
 
-### Data Flow Overview
-1. **Client Request**: Frontend communicates via Axios client (`src/services/api.js`) with request interceptors automatically attaching `Authorization: Bearer <jwt>`.
-2. **Backend Authentication**: `get_current_user` FastAPI dependency decodes token, checks `exp`, and extracts authenticated `user_id`.
-3. **Database Execution**: `TaskService` processes MongoDB operations targeting documents scoped strictly to the current user's ObjectId.
-4. **Response Serialization**: Pydantic v2 validates and serializes responses to JSON format with ISO-8601 timestamps.
+**Auth flow:**
+1. User signs in via Google or email/password
+2. Backend verifies credentials, issues a signed JWT (24h expiry)
+3. Frontend stores JWT in localStorage, attaches as `Authorization: Bearer` header
+4. Backend JWT middleware verifies token on every protected request and extracts `user_id`
+5. Task ownership is enforced using only the JWT-derived `user_id`
 
 ---
 
-## 📂 Project Directory Structure
+## Project Structure
 
 ```
-Kovai.co_Task/
+task-management-app/
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Navbar, TaskForm, TaskCard, TaskList, TaskFilters, ThemeToggle
+│   │   ├── pages/          # Login, Register, Dashboard
+│   │   ├── services/       # api.js (Axios)
+│   │   ├── context/        # AuthContext, ThemeContext
+│   │   ├── App.jsx         # React Router setup
+│   │   ├── main.jsx
+│   │   └── index.css       # CSS design system
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.js
 │
-├── task-management-app/
-│   ├── backend/
-│   │   ├── app/
-│   │   │   ├── main.py                 # FastAPI initialization, CORS, routing
-│   │   │   ├── core/
-│   │   │   │   └── config.py           # Pydantic BaseSettings (.env loader)
-│   │   │   ├── config/
-│   │   │   │   └── database.py         # MongoDB connection & index configuration
-│   │   │   ├── middleware/
-│   │   │   │   └── auth.py             # JWT verification & dependency injection
-│   │   │   ├── models/
-│   │   │   │   ├── task.py             # Task entity helpers & mappings
-│   │   │   │   └── user.py             # User entity helpers & mappings
-│   │   │   ├── routes/
-│   │   │   │   ├── auth.py             # Auth endpoints (Register, Login, Google)
-│   │   │   │   └── tasks.py            # Task CRUD endpoints (Protected)
-│   │   │   ├── schemas/
-│   │   │   │   ├── task.py             # Pydantic models for Task input/output
-│   │   │   │   └── user.py             # Pydantic models for Auth input/output
-│   │   │   └── services/
-│   │   │       ├── auth_service.py     # Password hashing & JWT generation
-│   │   │       ├── google_service.py   # Google OAuth token verification
-│   │   │       ├── task_service.py     # Task persistence logic
-│   │   │       └── user_service.py     # User query & creation logic
-│   │   ├── tests/                      # Unit & integration tests
-│   │   ├── .env.example                # Backend environment template
-│   │   └── requirements.txt            # Python dependencies
-│   │
-│   ├── frontend/
-│   │   ├── public/
-│   │   ├── src/
-│   │   │   ├── components/
-│   │   │   │   ├── Navbar.jsx          # Sticky glass header with user initials avatar
-│   │   │   │   ├── TaskCard.jsx        # Glass card, status border, inline edit, actions
-│   │   │   │   ├── TaskForm.jsx        # 4-column compact task creation form
-│   │   │   │   └── ThemeToggle.jsx     # Sun/Moon mode switcher (Lucide icons)
-│   │   │   ├── context/
-│   │   │   │   ├── AuthContext.jsx     # User session state & token management
-│   │   │   │   ├── ThemeContext.jsx    # Dark/Light theme state
-│   │   │   │   └── ToastContext.jsx    # Transient toast notifications provider
-│   │   │   ├── pages/
-│   │   │   │   ├── Dashboard.jsx       # 3-lane Kanban board, toolbar, skeleton loading
-│   │   │   │   ├── Login.jsx           # Split-panel login with Google One-Tap
-│   │   │   │   └── Register.jsx        # Split-panel registration with live validation
-│   │   │   ├── services/
-│   │   │   │   └── api.js              # Central Axios client with interceptors
-│   │   │   ├── App.jsx                 # Route configurations & ambient gradient mesh
-│   │   │   ├── index.css               # Complete Glassmorphism & Token design system
-│   │   │   └── main.jsx                # React root entry point
-│   │   ├── index.html                  # SVG favicon & IBM Plex Sans font links
-│   │   ├── package.json                # NPM package definitions
-│   │   ├── tailwind.config.js          # Tailwind styling configuration
-│   │   ├── vite.config.js              # Vite bundler & development proxy
-│   │   └── .env.example                # Frontend environment template
-│   │
-│   └── README.md                       # Project-level guide
-└── README.md                           # Master documentation
+├── backend/
+│   ├── app/
+│   │   ├── main.py         # FastAPI app, CORS, routers
+│   │   ├── core/config.py  # Settings from .env
+│   │   ├── config/database.py  # PyMongo client, indexes
+│   │   ├── models/         # Document shape helpers
+│   │   ├── schemas/        # Pydantic request/response schemas
+│   │   ├── routes/         # auth.py, tasks.py
+│   │   ├── services/       # auth_service, user_service, task_service
+│   │   └── middleware/auth.py  # JWT verification dependency
+│   ├── tests/
+│   ├── requirements.txt
+│   └── .env.example
+│
+├── docs/README.md
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 🛠️ Tech Stack Specification
+## Prerequisites
 
-| Component | Technology | Version | Purpose |
-|---|---|---|---|
-| **Frontend Framework** | React | `^19.0.0` | UI Component Tree & Virtual DOM |
-| **Build Tool** | Vite | `^6.0.0` | Ultra-fast HMR and optimized production bundle |
-| **Routing** | React Router DOM | `^6.28.0` | Declarative client-side routing & auth guards |
-| **Icons** | Lucide React | `^0.475.0` | Clean, modern vector UI iconography |
-| **Backend Framework** | FastAPI | `^0.115.0` | High-performance asynchronous REST API |
-| **ASGI Web Server** | Uvicorn | `^0.32.0` | Production-grade server for Python ASGI apps |
-| **Database** | MongoDB Atlas / PyMongo | `^4.10.0` | Scalable NoSQL document store |
-| **Data Validation** | Pydantic v2 | `^2.10.0` | Robust schema definition and input sanitation |
-| **Authentication** | PyJWT | `^2.10.0` | Cryptographic JSON Web Token signing & decoding |
-| **Password Hashing** | Bcrypt / Passlib | `^1.7.4` | Industry-standard salt-hashed passwords |
-| **Google Auth** | google-auth | `^2.37.0` | Secure verification of Google OAuth 2.0 ID tokens |
+- **Python** 3.12+
+- **Node.js** 18+ and npm
+- **MongoDB Atlas** account (free tier)
+- **Google Cloud Console** project with OAuth 2.0 credentials
 
 ---
 
-## ⚡ Quick Start & Installation Guide
+## Local Setup
 
-### 1. Prerequisites
-- **Node.js**: `v18.0.0+` or `v20.0.0+` ([Download Node.js](https://nodejs.org))
-- **Python**: `3.12.0+` ([Download Python](https://www.python.org))
-- **MongoDB Atlas** database account or local MongoDB server
-- **Git** version control tool
-
----
-
-### 2. MongoDB Atlas Configuration
-1. Log in to [MongoDB Atlas](https://cloud.mongodb.com/) and create a free M0 Shared Cluster.
-2. In **Database Access**, create a user with `Read and write to any database` permissions.
-3. In **Network Access**, add IP address `0.0.0.0/0` (allow access from anywhere) or your specific IP.
-4. Click **Connect** → **Drivers** (Python 3.12+) and copy your connection string:
-   ```env
-   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/taskflow?retryWrites=true&w=majority
-   ```
-
----
-
-### 3. Google OAuth 2.0 Configuration
-1. Open [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a new project named `TaskFlow`.
-3. Go to **APIs & Services → OAuth consent screen**:
-   - User Type: **External**
-   - Provide Application name, support email, and developer contact.
-4. Go to **Credentials → Create Credentials → OAuth Client ID**:
-   - Application type: **Web application**
-   - Authorized JavaScript origins:
-     - `http://localhost:5173`
-     - `http://127.0.0.1:5173`
-5. Copy the generated **Client ID** (e.g., `128647295018-...apps.googleusercontent.com`).
-
----
-
-### 4. Backend Setup & Run
-
-Open a terminal in the project directory:
+### 1. Clone the repository
 
 ```bash
-# Navigate to backend directory
-cd task-management-app/backend
+git clone <your-repo-url>
+cd task-management-app
+```
 
-# Create a Python virtual environment
+### 2. MongoDB Setup
+
+1. Create a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+2. Create a database user with read/write access
+3. Whitelist your IP (or `0.0.0.0/0` for development)
+4. Get your connection string: `mongodb+srv://<user>:<pass>@<cluster>/<dbname>?retryWrites=true&w=majority`
+5. Collections `users` and `tasks` are created automatically on first use
+
+### 3. Google Authentication Setup
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project (or use an existing one)
+3. Enable the **Google Identity** API
+4. Go to **APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID**
+5. Application type: **Web application**
+6. Add authorized JavaScript origins:
+   - `http://localhost:5173` (development)
+   - Your Vercel/Netlify production URL
+7. Copy the **Client ID** (format: `xxxx.apps.googleusercontent.com`)
+8. You do **not** need the client secret for this implementation (uses the Identity Services JS library)
+
+---
+
+## Environment Variables
+
+### Backend — `backend/.env`
+
+Copy `backend/.env.example` to `backend/.env` and fill in real values:
+
+```
+MONGODB_URI=mongodb+srv://...
+JWT_SECRET=a-very-long-random-string-at-least-32-chars
+JWT_EXPIRY_HOURS=24
+GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com
+ALLOWED_ORIGIN=http://localhost:5173
+```
+
+> **Never commit `.env` files. Only `.env.example` files are committed.**
+
+### Frontend — `frontend/.env`
+
+Copy `frontend/.env.example` to `frontend/.env` and fill in real values:
+
+```
+VITE_API_URL=http://localhost:8000
+VITE_GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com
+```
+
+---
+
+## Backend Setup
+
+```bash
+cd backend
+
+# Create and activate virtual environment
 python -m venv venv
-
-# Activate the virtual environment
-# Windows (PowerShell):
-.\venv\Scripts\Activate.ps1
-# Windows (CMD):
-.\venv\Scripts\activate.bat
-# macOS / Linux:
-source venv/bin/activate
-
-# Install required dependencies
-pip install -r requirements.txt
-```
-
-Create `backend/.env` (or copy from `.env.example`):
-```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/taskflow?retryWrites=true&w=majority
-DB_NAME=taskflow
-JWT_SECRET=super-secret-jwt-key-minimum-32-chars-long-random-string
-JWT_ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=1440
-GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-FRONTEND_URL=http://localhost:5173
-```
-
-Start the backend server:
-```bash
-uvicorn app.main:app --reload --port 8000
-```
-> 🚀 **Backend runs at:** `http://localhost:8000`  
-> 📖 **Interactive Swagger API Docs:** `http://localhost:8000/docs`
-
----
-
-### 5. Frontend Setup & Run
-
-Open a new terminal window:
-
-```bash
-# Navigate to frontend directory
-cd task-management-app/frontend
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # macOS/Linux
 
 # Install dependencies
+pip install -r requirements.txt
+
+# Copy and fill in .env
+copy .env.example .env
+# Edit .env with your credentials
+```
+
+---
+
+## Frontend Setup
+
+```bash
+cd frontend
+
+# Install dependencies (already done if you ran npm install)
 npm install
 
-# (Optional verify) Install icons if needed
-npm install lucide-react
+# Copy and fill in .env
+copy .env.example .env
+# Edit .env with your credentials
 ```
 
-Create `frontend/.env` (or copy from `.env.example`):
-```env
-VITE_API_URL=http://localhost:8000
-VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-```
+---
 
-Start the Vite development server:
+## Running the Application
+
+### Backend (terminal 1)
+
 ```bash
+cd backend
+venv\Scripts\activate
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+API is available at: `http://localhost:8000`
+Swagger docs: `http://localhost:8000/docs`
+ReDoc: `http://localhost:8000/redoc`
+
+### Frontend (terminal 2)
+
+```bash
+cd frontend
 npm run dev
 ```
-> 💻 **Frontend opens at:** `http://localhost:5173`
+
+App is available at: `http://localhost:5173`
 
 ---
 
-## 📡 API Reference
+## Running Tests
 
-All protected endpoints require the HTTP Authorization header:
-`Authorization: Bearer <your_jwt_token>`
-
-### 🔑 Authentication Endpoints
-
-| Method | Endpoint | Access | Description | Payload Sample |
-|---|---|---|---|---|
-| `POST` | `/api/auth/register` | Public | Register new email/password account | `{"email": "user@test.com", "password": "Password123", "mobile_number": "9876543210"}` |
-| `POST` | `/api/auth/login` | Public | Login with email/password | `{"email": "user@test.com", "password": "Password123"}` |
-| `POST` | `/api/auth/google` | Public | Authenticate via Google ID Token | `{"credential": "<google_jwt_token>"}` |
-| `GET` | `/api/auth/me` | Protected | Fetch profile of signed-in user | *None* |
-
-### 📝 Task Endpoints
-
-| Method | Endpoint | Access | Description | Query Parameters / Body |
-|---|---|---|---|---|
-| `GET` | `/api/tasks/` | Protected | Fetch tasks of authenticated user | `?status=Planned` *(optional filter)* |
-| `POST` | `/api/tasks/` | Protected | Create a new task | `{"title": "Task title", "description": "Details", "due_date": "2026-09-30T10:00:00"}` |
-| `GET` | `/api/tasks/{id}` | Protected | Retrieve specific task details | *Path param: id* |
-| `PUT` | `/api/tasks/{id}` | Protected | Update task title, description, or due date | `{"title": "New Title", "description": "New Desc"}` |
-| `PATCH`| `/api/tasks/{id}/status`| Protected | Transition task status | `{"status": "In Progress"}` *(Planned / In Progress / Complete)* |
-| `DELETE`| `/api/tasks/{id}` | Protected | Delete task permanently | *Path param: id* |
-
----
-
-## 🗄️ Database Schema & Security
-
-### `users` Collection
-```json
-{
-  "_id": ObjectId("665a1b2c3d4e5f6a7b8c9d0e"),
-  "email": "developer@example.com",
-  "password_hash": "$2b$12$e8x... (null for pure Google OAuth users)",
-  "name": "Dev User",
-  "picture": "https://lh3.googleusercontent.com/a/...",
-  "mobile_number": "9876543210",
-  "created_at": ISODate("2026-09-16T05:00:00.000Z"),
-  "updated_at": ISODate("2026-09-16T05:00:00.000Z")
-}
-```
-*Index*: Unique index on `email`.
-
-### `tasks` Collection
-```json
-{
-  "_id": ObjectId("665a2c3d4e5f6a7b8c9d0f1a"),
-  "user_id": ObjectId("665a1b2c3d4e5f6a7b8c9d0e"),
-  "title": "Build Glassmorphism Task UI",
-  "description": "Implement 3-blob background mesh and frosted glass panels.",
-  "status": "In Progress",
-  "due_date": ISODate("2026-09-20T18:00:00.000Z"),
-  "created_at": ISODate("2026-09-16T05:30:00.000Z"),
-  "updated_at": ISODate("2026-09-16T06:15:00.000Z")
-}
-```
-*Indexes*: Compound index on `(user_id, status)` and `(user_id, created_at)`.
-
----
-
-## 🚀 Production Deployment Guide
-
-### Deploying Backend to Render
-1. Create a new **Web Service** connected to your repository.
-2. Set root directory to `task-management-app/backend`.
-3. Set Environment to **Python 3**.
-4. Build Command:
-   ```bash
-   pip install -r requirements.txt
-   ```
-5. Start Command:
-   ```bash
-   uvicorn app.main:app --host 0.0.0.0 --port $PORT
-   ```
-6. Add Environment Variables: `MONGODB_URI`, `DB_NAME`, `JWT_SECRET`, `GOOGLE_CLIENT_ID`, `FRONTEND_URL`.
-
-### Deploying Frontend to Vercel / Netlify
-1. Connect repository to [Vercel](https://vercel.com).
-2. Set Root Directory to `task-management-app/frontend`.
-3. Framework Preset: **Vite**.
-4. Build Command: `npm run build`.
-5. Output Directory: `dist`.
-6. Add Environment Variables:
-   - `VITE_API_URL`: URL of your deployed Render backend (e.g. `https://taskflow-api.onrender.com`)
-   - `VITE_GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
-7. Ensure your production URL is whitelisted in Google Cloud Console Credentials.
-
----
-
-## 🧪 Testing & Verification
-
-### Frontend Production Build Test
-To verify the application compiles clean with zero warnings or errors:
 ```bash
-cd task-management-app/frontend
-npm run build
-```
-Output:
-```
-✓ built in ~7s
-dist/index.html                   1.13 kB
-dist/assets/index-*.css          24.88 kB
-dist/assets/index-*.js          339.88 kB
+cd backend
+venv\Scripts\activate
+pip install pytest
+pytest tests/ -v
 ```
 
-### Health Check Endpoint
-To verify the backend server is running and responding:
-```bash
-curl http://localhost:8000/
-```
-Response:
-```json
-{"status": "healthy", "service": "Task Management API"}
-```
+Tests cover: registration validation, login failures, wrong-provider login, Google upsert, task CRUD, ownership enforcement, invalid status, missing title, and more.
 
 ---
 
-## 👨‍💻 Author & Assessment Notes
+## API Endpoints
 
-- **Task**: Task Management Application (Kovai.co Engineering Assessment)
-- **Built with**: React 19, FastAPI, MongoDB Atlas, JWT, TailwindCSS, Glassmorphism UI
-- **Status**: Production Ready & Fully Verified
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| `GET` | `/` | — | Health check |
+| `POST` | `/api/auth/google` | — | Google Sign-In → JWT |
+| `POST` | `/api/auth/register` | — | Register (email/password) → JWT |
+| `POST` | `/api/auth/login` | — | Login (email/password) → JWT |
+| `GET` | `/api/tasks` | JWT | List tasks (optional `?status=`) |
+| `POST` | `/api/tasks` | JWT | Create task |
+| `PATCH` | `/api/tasks/{id}` | JWT | Update title/description |
+| `PATCH` | `/api/tasks/{id}/status` | JWT | Update status |
+| `DELETE` | `/api/tasks/{id}` | JWT | Delete task (204) |
+
+---
+
+## Deployment
+
+### Backend → Render
+
+1. Push to GitHub
+2. Create a new **Web Service** on [Render](https://render.com)
+3. Build command: `pip install -r requirements.txt`
+4. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Add environment variables (same as `backend/.env`) in the Render dashboard
+6. Set `ALLOWED_ORIGIN` to your Vercel/Netlify frontend URL
+
+### Frontend → Vercel
+
+1. Import your GitHub repo in [Vercel](https://vercel.com)
+2. Set **Root Directory** to `frontend`
+3. Framework preset: **Vite**
+4. Add environment variables:
+   - `VITE_API_URL` = your Render backend URL (e.g. `https://your-app.onrender.com`)
+   - `VITE_GOOGLE_CLIENT_ID` = your Google OAuth client ID
+5. Add your Vercel domain to Google Cloud Console's authorized origins
+
+---
+
+## Email/Password Auth Notes
+
+- Passwords are hashed with **bcrypt** via `passlib`. Plaintext passwords are never stored or logged.
+- `password_hash` is never included in any API response.
+- Login failure always returns the same generic message (`"Invalid email or password."`) — no enumeration.
+- If a Google-registered email is used to attempt password login, a clear error is returned: "Please use Continue with Google."
+- Accounts from different providers (same email) are **not linked** — this is by design.
+
+---
+
+## Assumptions
+
+- A user is identified by their email across sign-in providers, but accounts are **not linked** if an email exists in both Google and local flows (spec requirement).
+- JWT expiry is fixed (24h by default). There is no refresh token flow; users must re-login after expiry.
+- No email verification or OTP is implemented (out of scope per spec).
+- Task filtering by status triggers a backend query; search and sort are client-side.
+- No pagination — all tasks for a user are returned in one query.
+
+---
+
+## Known Limitations
+
+- Google Sign-In requires a valid `GOOGLE_CLIENT_ID` and an internet connection to verify tokens.
+- No rate limiting is implemented on auth endpoints (out of scope per spec).
+- No password reset flow (out of scope per spec).
+- The app is single-user per account — no teams, sharing, or collaboration features.
+- `allow_origins=["*"]` is **not** used. In production, set `ALLOWED_ORIGIN` to your specific frontend domain.
+
+---
+
+## Troubleshooting
+
+| Issue | Solution |
+|---|---|
+| Backend won't start | Check `MONGODB_URI` is set and MongoDB Atlas IP whitelist includes your IP |
+| Google Sign-In shows error | Verify `VITE_GOOGLE_CLIENT_ID` matches Google Cloud Console and the domain is authorized |
+| 401 on all API calls | Check your JWT hasn't expired; try logging out and back in |
+| CORS errors | Ensure `ALLOWED_ORIGIN` in backend `.env` exactly matches your frontend URL (no trailing slash) |
+| `pymongo.errors.ConfigurationError` | Your MongoDB URI might be malformed; re-copy it from Atlas |
+| Tasks not loading | Check browser console and network tab; verify backend is running on port 8000 |
+
+---
+
+## AI Usage Summary
+
+This project was built with AI assistance (Antigravity / Google Gemini). AI was used for:
+
+- **Scaffolding**: Generating the project structure, boilerplate, and configuration files
+- **Backend**: FastAPI app, Pydantic schemas, service layer logic, JWT implementation, bcrypt integration, PyMongo queries
+- **Frontend**: React components, context providers, CSS design system, form validation logic
+- **Testing**: pytest fixtures, unit tests for auth and task services
+- **Documentation**: This README and the user documentation
+
+All generated code was reviewed for correctness against the specification before delivery. Security-sensitive logic (JWT verification, password hashing, ownership enforcement, CORS, error message sanitization) was explicitly verified against the spec requirements.
