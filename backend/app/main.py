@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     logger.info("Starting Task Management API...")
     settings.validate()
     ensure_indexes()
-    logger.info("Startup complete. Allowed origin: %s", settings.ALLOWED_ORIGIN)
+    logger.info("Startup complete. Allowed origins: %s", settings.allowed_origins_list)
     yield
     logger.info("Shutting down Task Management API.")
 
@@ -47,7 +47,7 @@ app = FastAPI(
 # ── CORS ───────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.ALLOWED_ORIGIN],
+    allow_origins=settings.allowed_origins_list,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
