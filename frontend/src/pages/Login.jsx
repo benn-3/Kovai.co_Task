@@ -71,7 +71,7 @@ export default function Login() {
       <div className="auth-brand-panel" aria-hidden="true">
         <div className="brand-content">
           <div className="brand-logo-mark">✓</div>
-          <h1 className="brand-app-name">TaskFlow</h1>
+          <h1 className="brand-app-name">TaskTrac</h1>
           <p className="brand-tagline">
             A focused task management tool built for engineers who prefer
             clarity over ceremony.
@@ -90,7 +90,7 @@ export default function Login() {
           {/* Mobile-only logo (brand panel is hidden on mobile) */}
           <div className="auth-mobile-logo">
             <div className="auth-mobile-mark" aria-hidden="true">✓</div>
-            <span className="auth-mobile-name">TaskFlow</span>
+            <span className="auth-mobile-name">TaskTrac</span>
           </div>
 
           <div>

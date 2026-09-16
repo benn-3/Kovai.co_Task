@@ -17,9 +17,9 @@ export default function Navbar({ user }) {
     <nav className="navbar" aria-label="Main navigation">
       <div className="navbar-inner">
         {/* Brand */}
-        <a href="/dashboard" className="navbar-brand" aria-label="TaskFlow home">
+        <a href="/dashboard" className="navbar-brand" aria-label="TaskTrac home">
           <div className="navbar-brand-mark" aria-hidden="true">✓</div>
-          TaskFlow
+          TaskTrac
         </a>
 
         {/* Right side */}

@@ -74,7 +74,7 @@ export default function Register() {
       <div className="auth-brand-panel" aria-hidden="true">
         <div className="brand-content">
           <div className="brand-logo-mark">✓</div>
-          <h1 className="brand-app-name">TaskFlow</h1>
+          <h1 className="brand-app-name">TaskTrac</h1>
           <p className="brand-tagline">
             Manage your work with three statuses, zero noise, and a clean interface
             that stays out of your way.
@@ -91,7 +91,7 @@ export default function Register() {
         <div className="auth-form-panel-inner">
           <div className="auth-mobile-logo">
             <div className="auth-mobile-mark" aria-hidden="true">✓</div>
-            <span className="auth-mobile-name">TaskFlow</span>
+            <span className="auth-mobile-name">TaskTrac</span>
           </div>
 
           <div>

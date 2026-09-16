@@ -1,4 +1,4 @@
-# 📋 TaskFlow — Production Task Management Application
+# 📋 TaskTrac — Production Task Management Application
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
@@ -9,7 +9,7 @@
 [![Styling](https://img.shields.io/badge/UI-Glassmorphism%20%2B%20Design%20System-8A2BE2.svg?style=flat)](https://developer.mozilla.org)
 [![WCAG](https://img.shields.io/badge/Accessibility-WCAG%20AA%20Compliant-success.svg?style=flat)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 
-> **TaskFlow** is a modern, full-stack personal task management platform designed for engineers who demand speed, clarity, and precision. Built with a **FastAPI** Python backend, **React 19** Vite frontend, **MongoDB Atlas** cloud database, dual **Google OAuth 2.0 + JWT** authentication, and a **Glassmorphic UI design system**.
+> **TaskTrac** is a modern, full-stack personal task management platform designed for engineers who demand speed, clarity, and precision. Built with a **FastAPI** Python backend, **React 19** Vite frontend, **MongoDB Atlas** cloud database, dual **Google OAuth 2.0 + JWT** authentication, and a **Glassmorphic UI design system**.
 
 ---
 
@@ -72,7 +72,7 @@
 
 ## 🎨 UI & Design Philosophy
 
-TaskFlow embraces a **Glassmorphism** design system with a calm, focused workbench aesthetic:
+TaskTrac embraces a **Glassmorphism** design system with a calm, focused workbench aesthetic:
 
 1. **Ambient Gradient Mesh**: A fixed, GPU-accelerated background layer with three soft blurred radial blobs (accent, in-progress amber, complete green) that drift slowly (`±20px`), bringing frosted glass surfaces to life.
 2. **Selective Glass Application**:
@@ -227,14 +227,14 @@ Kovai.co_Task/
 3. In **Network Access**, add IP address `0.0.0.0/0` (allow access from anywhere) or your specific IP.
 4. Click **Connect** → **Drivers** (Python 3.12+) and copy your connection string:
    ```env
-   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/taskflow?retryWrites=true&w=majority
+   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/TaskTrac?retryWrites=true&w=majority
    ```
 
 ---
 
 ### 3. Google OAuth 2.0 Configuration
 1. Open [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a new project named `TaskFlow`.
+2. Create a new project named `TaskTrac`.
 3. Go to **APIs & Services → OAuth consent screen**:
    - User Type: **External**
    - Provide Application name, support email, and developer contact.
@@ -272,8 +272,8 @@ pip install -r requirements.txt
 
 Create `backend/.env` (or copy from `.env.example`):
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/taskflow?retryWrites=true&w=majority
-DB_NAME=taskflow
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/TaskTrac?retryWrites=true&w=majority
+DB_NAME=TaskTrac
 JWT_SECRET=super-secret-jwt-key-minimum-32-chars-long-random-string
 JWT_ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440
@@ -403,7 +403,7 @@ All protected endpoints require the HTTP Authorization header:
 4. Build Command: `npm run build`.
 5. Output Directory: `dist`.
 6. Add Environment Variables:
-   - `VITE_API_URL`: URL of your deployed Render backend (e.g. `https://taskflow-api.onrender.com`)
+   - `VITE_API_URL`: URL of your deployed Render backend (e.g. `https://TaskTrac-api.onrender.com`)
    - `VITE_GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
 7. Ensure your production URL is whitelisted in Google Cloud Console Credentials.
 

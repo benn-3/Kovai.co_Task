@@ -1,6 +1,6 @@
-# TaskFlow — User Guide
+# TaskTrac — User Guide
 
-Welcome to **TaskFlow**, a simple and powerful task management application. This guide explains how to use every feature.
+Welcome to **TaskTrac**, a simple and powerful task management application. This guide explains how to use every feature.
 
 ---
 
