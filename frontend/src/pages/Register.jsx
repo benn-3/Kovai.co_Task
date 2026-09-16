@@ -13,7 +13,7 @@ const CLIENT_RULES = {
     return '';
   },
   confirm_password: (v, form) => (v !== form.password ? 'Passwords do not match.' : ''),
-  mobile_number: (v) => (/^\d{10,15}$/.test(v) ? '' : '10–15 digits only, no spaces or dashes.'),
+  mobile_number: (v) => (/^\d{10,15}$/.test(v) ? '' : '10 digits only, no spaces or dashes.'),
 };
 
 const FIELDS = [
