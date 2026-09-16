@@ -25,7 +25,11 @@ def build_google_user(
     }
 
 
-def build_user_document(email, password_hash, mobile_number) -> dict:
+def build_local_user(
+    email: str,
+    password_hash: str,
+    mobile_number: str
+) -> dict:
     """Build a new user document for a local email/password user."""
 
     mobile_number = str(mobile_number).strip()
