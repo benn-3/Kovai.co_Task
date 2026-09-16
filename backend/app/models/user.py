@@ -25,12 +25,14 @@ def build_google_user(
     }
 
 
-def build_local_user(
-    email: str,
-    password_hash: str,
-    mobile_number: str,
-) -> dict:
+def build_user_document(email, password_hash, mobile_number) -> dict:
     """Build a new user document for a local email/password user."""
+
+    mobile_number = str(mobile_number).strip()
+
+    if not mobile_number.isdigit() or len(mobile_number) != 10:
+        raise ValueError("Mobile number must be exactly 10 digits")
+
     return {
         "email": email.lower().strip(),
         "auth_provider": "local",
