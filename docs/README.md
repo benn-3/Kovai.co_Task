@@ -192,3 +192,5 @@ See the main [README.md](../README.md) for:
 - MongoDB Atlas setup
 - Google OAuth configuration
 - Deployment instructions
+- [AI Usage Summary](../README.md#-ai-usage-summary) & [Detailed AI Usage Report](AI_USAGE.md)
+

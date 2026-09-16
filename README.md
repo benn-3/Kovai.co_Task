@@ -42,6 +42,8 @@
 - [🗄️ Database Schema & Security](#️-database-schema--security)
 - [🚀 Production Deployment Guide](#-production-deployment-guide)
 - [🧪 Testing & Verification](#-testing--verification)
+- [🤖 AI Usage Summary](#-ai-usage-summary)
+- [👨‍💻 Author & Assessment Notes](#-author--assessment-notes)
 
 ---
 
@@ -132,63 +134,65 @@ TaskTrac embraces a **Glassmorphism** design system with a calm, focused workben
 ```
 Kovai.co_Task/
 │
-├── task-management-app/
-│   ├── backend/
-│   │   ├── app/
-│   │   │   ├── main.py                 # FastAPI initialization, CORS, routing
-│   │   │   ├── core/
-│   │   │   │   └── config.py           # Pydantic BaseSettings (.env loader)
-│   │   │   ├── config/
-│   │   │   │   └── database.py         # MongoDB connection & index configuration
-│   │   │   ├── middleware/
-│   │   │   │   └── auth.py             # JWT verification & dependency injection
-│   │   │   ├── models/
-│   │   │   │   ├── task.py             # Task entity helpers & mappings
-│   │   │   │   └── user.py             # User entity helpers & mappings
-│   │   │   ├── routes/
-│   │   │   │   ├── auth.py             # Auth endpoints (Register, Login, Google)
-│   │   │   │   └── tasks.py            # Task CRUD endpoints (Protected)
-│   │   │   ├── schemas/
-│   │   │   │   ├── task.py             # Pydantic models for Task input/output
-│   │   │   │   └── user.py             # Pydantic models for Auth input/output
-│   │   │   └── services/
-│   │   │       ├── auth_service.py     # Password hashing & JWT generation
-│   │   │       ├── google_service.py   # Google OAuth token verification
-│   │   │       ├── task_service.py     # Task persistence logic
-│   │   │       └── user_service.py     # User query & creation logic
-│   │   ├── tests/                      # Unit & integration tests
-│   │   ├── .env.example                # Backend environment template
-│   │   └── requirements.txt            # Python dependencies
-│   │
-│   ├── frontend/
-│   │   ├── public/
-│   │   ├── src/
-│   │   │   ├── components/
-│   │   │   │   ├── Navbar.jsx          # Sticky glass header with user initials avatar
-│   │   │   │   ├── TaskCard.jsx        # Glass card, status border, inline edit, actions
-│   │   │   │   ├── TaskForm.jsx        # 4-column compact task creation form
-│   │   │   │   └── ThemeToggle.jsx     # Sun/Moon mode switcher (Lucide icons)
-│   │   │   ├── context/
-│   │   │   │   ├── AuthContext.jsx     # User session state & token management
-│   │   │   │   ├── ThemeContext.jsx    # Dark/Light theme state
-│   │   │   │   └── ToastContext.jsx    # Transient toast notifications provider
-│   │   │   ├── pages/
-│   │   │   │   ├── Dashboard.jsx       # 3-lane Kanban board, toolbar, skeleton loading
-│   │   │   │   ├── Login.jsx           # Split-panel login with Google One-Tap
-│   │   │   │   └── Register.jsx        # Split-panel registration with live validation
-│   │   │   ├── services/
-│   │   │   │   └── api.js              # Central Axios client with interceptors
-│   │   │   ├── App.jsx                 # Route configurations & ambient gradient mesh
-│   │   │   ├── index.css               # Complete Glassmorphism & Token design system
-│   │   │   └── main.jsx                # React root entry point
-│   │   ├── index.html                  # SVG favicon & IBM Plex Sans font links
-│   │   ├── package.json                # NPM package definitions
-│   │   ├── tailwind.config.js          # Tailwind styling configuration
-│   │   ├── vite.config.js              # Vite bundler & development proxy
-│   │   └── .env.example                # Frontend environment template
-│   │
-│   └── README.md                       # Project-level guide
-└── README.md                           # Master documentation
+├── backend/
+│   ├── app/
+│   │   ├── main.py                 # FastAPI initialization, CORS, routing
+│   │   ├── core/
+│   │   │   └── config.py           # Pydantic BaseSettings (.env loader)
+│   │   ├── config/
+│   │   │   └── database.py         # MongoDB connection & index configuration
+│   │   ├── middleware/
+│   │   │   └── auth.py             # JWT verification & dependency injection
+│   │   ├── models/
+│   │   │   ├── task.py             # Task entity helpers & mappings
+│   │   │   └── user.py             # User entity helpers & mappings
+│   │   ├── routes/
+│   │   │   ├── auth.py             # Auth endpoints (Register, Login, Google)
+│   │   │   └── tasks.py            # Task CRUD endpoints (Protected)
+│   │   ├── schemas/
+│   │   │   ├── task.py             # Pydantic models for Task input/output
+│   │   │   └── user.py             # Pydantic models for Auth input/output
+│   │   └── services/
+│   │       ├── auth_service.py     # Password hashing & JWT generation
+│   │       ├── google_service.py   # Google OAuth token verification
+│   │       ├── task_service.py     # Task persistence logic
+│   │       └── user_service.py     # User query & creation logic
+│   ├── tests/                      # Unit & integration tests
+│   ├── .env.example                # Backend environment template
+│   ├── requirements.txt            # Python dependencies
+│   └── runtime.txt                 # Render Python 3.12 runtime pin
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx          # Sticky glass header with user avatar
+│   │   │   ├── TaskCard.jsx        # Glass card, status border, inline edit, actions
+│   │   │   ├── TaskFilters.jsx     # Status tabs, search input, and sort toggles
+│   │   │   ├── TaskForm.jsx        # Compact task creation form
+│   │   │   ├── TaskList.jsx        # 3-lane Kanban & task grid layout
+│   │   │   └── ThemeToggle.jsx     # Sun/Moon mode switcher (Lucide icons)
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx     # User session state & token management
+│   │   │   ├── ThemeContext.jsx    # Dark/Light theme state
+│   │   │   └── ToastContext.jsx    # Transient toast notifications provider
+│   │   ├── pages/
+│   │   │   ├── Dashboard.jsx       # 3-lane Kanban board, toolbar, skeleton loading
+│   │   │   ├── Login.jsx           # Split-panel login with Google One-Tap
+│   │   │   └── Register.jsx        # Split-panel registration with live validation
+│   │   ├── services/
+│   │   │   └── api.js              # Central Axios client with interceptors
+│   │   ├── App.jsx                 # Route configurations & ambient gradient mesh
+│   │   ├── index.css               # Complete Glassmorphism & Token design system
+│   │   └── main.jsx                # React root entry point
+│   ├── index.html                  # SVG favicon & IBM Plex Sans font links
+│   ├── package.json                # NPM package definitions
+│   ├── tailwind.config.js          # Tailwind CSS configurations
+│   └── vercel.json                 # Vercel SPA routing rewrite config
+│
+└── docs/
+    ├── README.md                   # Comprehensive end-user documentation
+    └── AI_USAGE.md                 # Detailed AI Usage & Disclosure Report
 ```
 
 ---
@@ -253,7 +257,7 @@ Open a terminal in the project directory:
 
 ```bash
 # Navigate to backend directory
-cd task-management-app/backend
+cd backend
 
 # Create a Python virtual environment
 python -m venv venv
@@ -296,7 +300,7 @@ Open a new terminal window:
 
 ```bash
 # Navigate to frontend directory
-cd task-management-app/frontend
+cd frontend
 
 # Install dependencies
 npm install
@@ -384,7 +388,7 @@ All protected endpoints require the HTTP Authorization header:
 
 ### Deploying Backend to Render
 1. Create a new **Web Service** connected to your repository.
-2. Set root directory to `task-management-app/backend`.
+2. Set root directory to `backend`.
 3. Set Environment to **Python 3**.
 4. Build Command:
    ```bash
@@ -398,12 +402,12 @@ All protected endpoints require the HTTP Authorization header:
 
 ### Deploying Frontend to Vercel / Netlify
 1. Connect repository to [Vercel](https://vercel.com).
-2. Set Root Directory to `task-management-app/frontend`.
+2. Set Root Directory to `frontend`.
 3. Framework Preset: **Vite**.
 4. Build Command: `npm run build`.
 5. Output Directory: `dist`.
 6. Add Environment Variables:
-   - `VITE_API_URL`: URL of your deployed Render backend (e.g. `https://TaskTrac-api.onrender.com`)
+   - `VITE_API_URL`: URL of your deployed Render backend (e.g. `https://kovai-co-task.onrender.com`)
    - `VITE_GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
 7. Ensure your production URL is whitelisted in Google Cloud Console Credentials.
 
@@ -414,7 +418,7 @@ All protected endpoints require the HTTP Authorization header:
 ### Frontend Production Build Test
 To verify the application compiles clean with zero warnings or errors:
 ```bash
-cd task-management-app/frontend
+cd frontend
 npm run build
 ```
 Output:
@@ -437,8 +441,44 @@ Response:
 
 ---
 
+## 🤖 AI Usage Summary
+
+> Detailed report available at: [docs/AI_USAGE.md](file:///c:/Important/College/Project/Kovai.co_Task/docs/AI_USAGE.md)
+
+In accordance with transparent engineering assessment practices, this section summarizes the usage of Artificial Intelligence (AI) tools during the design and development of **TaskTrac**.
+
+### 🛠️ Tools Used
+- **Claude (Anthropic)**: Used for architecture brainstorming, boilerplate schema generation, Glassmorphic CSS token assistance, and documentation drafting.
+- **ChatGPT (OpenAI)**: Used for code drafting, regex validation patterns, test fixture scaffolding, and syntax lookups.
+
+### 📊 Effort & Contribution Breakdown
+
+| Category | AI Contribution | Human Authorship | Primary Human Responsibility |
+|---|:---:|:---:|---|
+| **System Architecture** | 10% | 90% | Tech stack selection, stateless JWT design, multi-tenant database isolation |
+| **Backend Engineering** | 25% | 75% | Business logic, PyMongo indexing, bcrypt security, Render runtime fixes |
+| **Frontend Engineering** | 20% | 80% | React 19 architecture, Context providers, Kanban layout, Axios interceptors |
+| **UI Styling & Polish** | 40% | 60% | Glassmorphism design tokens, layout hierarchy, dark/light theme engine |
+| **Validation & Security** | 20% | 80% | Mobile number regex (10-15 digits), password rules, user ID scoping |
+| **Testing & Verification** | 20% | 80% | Test case formulation, end-to-end QA, production build and API checks |
+| **Documentation & Cloud**| 40% | 60% | Vercel & Render cloud deployments, OAuth origin setup, User Guide |
+| **Overall Project Effort**| **~25%** | **~75%** | **End-to-end architecture, technical decisions, and code validation** |
+
+### 🔒 Human Validation & Security Protocol
+1. **Zero Unchecked Code**: All AI-assisted code was reviewed line-by-line, refactored to conform to project architecture, and manually tested.
+2. **Security & Secrets**: No secrets, API keys, or database credentials were hardcoded; all configuration is managed via strict environment variables.
+3. **Data Scoping**: Every database read, write, update, and delete operation is explicitly validated and filtered by the authenticated user's ID to prevent IDOR vulnerabilities.
+4. **Verification**: Full static analysis (`oxlint`), production build (`npm run build`), and live cloud endpoint testing were conducted before submission.
+
+---
+
 ## 👨‍💻 Author & Assessment Notes
 
 - **Task**: Task Management Application (Kovai.co Engineering Assessment)
+- **Author**: Benny Hinn ([bennyhinm18@gmail.com](mailto:bennyhinm18@gmail.com))
 - **Built with**: React 19, FastAPI, MongoDB Atlas, JWT, TailwindCSS, Glassmorphism UI
+- **Live URLs**:
+  - Frontend (Vercel): [https://kovai-co-task.vercel.app/](https://kovai-co-task.vercel.app/)
+  - Backend API (Render): [https://kovai-co-task.onrender.com](https://kovai-co-task.onrender.com)
+  - API Docs (Swagger): [https://kovai-co-task.onrender.com/docs](https://kovai-co-task.onrender.com/docs)
 - **Status**: Production Ready & Fully Verified
