@@ -13,8 +13,20 @@
 
 ---
 
+## 🌐 Live Deployed Application
+
+| Component | Platform | URL |
+|---|---|---|
+| **Frontend Application** | **Vercel** | [https://kovai-co-task.vercel.app/](https://kovai-co-task.vercel.app/) |
+| **Backend REST API** | **Render** | [https://kovai-co-task.onrender.com](https://kovai-co-task.onrender.com) |
+| **Interactive Swagger Docs** | **Render** | [https://kovai-co-task.onrender.com/docs](https://kovai-co-task.onrender.com/docs) |
+| **ReDoc API Documentation** | **Render** | [https://kovai-co-task.onrender.com/redoc](https://kovai-co-task.onrender.com/redoc) |
+
+---
+
 ## 📑 Table of Contents
 
+- [🌐 Live Deployed Application](#-live-deployed-application)
 - [✨ Feature Highlights](#-feature-highlights)
 - [🎨 UI & Design Philosophy](#-ui--design-philosophy)
 - [🏛️ System Architecture](#️-system-architecture)

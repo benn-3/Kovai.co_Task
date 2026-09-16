@@ -7,7 +7,7 @@ Welcome to **TaskFlow**, a simple and powerful task management application. This
 ## Accessing the App
 
 - **Local development:** Open `http://localhost:5173` in your browser after starting the frontend.
-- **Production:** Navigate to your deployed Vercel/Netlify URL.
+- **Production:** Navigate to [https://kovai-co-task.vercel.app/](https://kovai-co-task.vercel.app/)
 
 ---
 
