@@ -17,13 +17,6 @@ function PublicRoute({ children }) {
 export default function App() {
   return (
     <div className="app-shell">
-      {/* ── Fixed gradient mesh background layer ───────────────────────── */}
-      <div className="gradient-mesh" aria-hidden="true">
-        <div className="mesh-blob blob-accent" />
-        <div className="mesh-blob blob-progress" />
-        <div className="mesh-blob blob-complete" />
-      </div>
-
       <div className="app-content">
         <BrowserRouter>
           <Routes>

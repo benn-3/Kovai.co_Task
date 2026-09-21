@@ -18,13 +18,13 @@ function isOverdue(dueDateIso, status) {
 }
 
 export default function TaskCard({ task, onUpdate, onStatusChange, onDelete }) {
-  const [isEditing, setIsEditing]         = useState(false);
-  const [editForm, setEditForm]           = useState({ title: task.title, description: task.description || '' });
-  const [editError, setEditError]         = useState('');
-  const [editLoading, setEditLoading]     = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({ title: task.title, description: task.description || '' });
+  const [editError, setEditError] = useState('');
+  const [editLoading, setEditLoading] = useState(false);
   const [statusLoading, setStatusLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [showConfirm, setShowConfirm]     = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const overdue = isOverdue(task.due_date, task.status);
 
@@ -92,29 +92,32 @@ export default function TaskCard({ task, onUpdate, onStatusChange, onDelete }) {
         data-status={task.status}
         aria-label={`Task: ${task.title}`}
       >
-        {/* Title */}
-        <p className="task-title">{task.title}</p>
+        {/* Top accent bar is CSS ::before */}
+        <div className="task-card-body">
+          {/* Title */}
+          <p className="task-title">{task.title}</p>
 
-        {/* Description */}
-        {task.description && (
-          <p className="task-description">{task.description}</p>
-        )}
-
-        {/* Meta — dates */}
-        <div className="task-meta">
-          <span className="task-meta-item" title="Created">
-            {formatDate(task.created_at)}
-          </span>
-          {task.due_date && (
-            <span
-              className="task-meta-item"
-              style={overdue ? { color: 'var(--status-in-progress)' } : {}}
-              title="Due date"
-            >
-              Due {formatDate(task.due_date)}
-              {overdue && <span className="overdue-badge">overdue</span>}
-            </span>
+          {/* Description */}
+          {task.description && (
+            <p className="task-description">{task.description}</p>
           )}
+
+          {/* Meta — dates */}
+          <div className="task-meta">
+            <span className="task-meta-item" title="Created">
+              {formatDate(task.created_at)}
+            </span>
+            {task.due_date && (
+              <span
+                className="task-meta-item"
+                style={overdue ? { color: 'var(--danger)' } : {}}
+                title="Due date"
+              >
+                Due {formatDate(task.due_date)}
+                {overdue && <span className="overdue-badge">overdue</span>}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Inline edit */}

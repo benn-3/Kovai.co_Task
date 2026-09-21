@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Plus } from 'lucide-react';
 
 export default function TaskForm({ onSubmit }) {
   const [form, setForm] = useState({ title: '', description: '', due_date: '' });
@@ -43,7 +44,7 @@ export default function TaskForm({ onSubmit }) {
         {/* Title */}
         <div className="form-group">
           <label htmlFor="task-title" className="form-label">
-            Title <span aria-hidden="true" style={{ color: 'var(--status-in-progress)' }}>*</span>
+            Title <span aria-hidden="true" style={{ color: 'var(--danger)' }}>*</span>
           </label>
           <input
             id="task-title"
@@ -92,7 +93,7 @@ export default function TaskForm({ onSubmit }) {
             disabled={loading}
             style={{ alignSelf: 'flex-end' }}
           >
-            {loading ? <><span className="spinner" /> Adding…</> : '+ Add task'}
+            {loading ? <><span className="spinner" /> Adding…</> : <><Plus size={15} strokeWidth={2} /> Add task</>}
           </button>
         </div>
       </div>

@@ -1,12 +1,12 @@
 /**
- * Dashboard — three-lane board layout.
+ * Dashboard — premium SaaS-style three-lane board layout.
  * Desktop: Planned / In Progress / Complete columns side by side.
  * Mobile: status-filter tabs to switch between single-column views.
- * Search and sort live in a toolbar above the board.
+ * Includes greeting header and stats summary cards.
  * All data flow (API calls, state) unchanged from original.
  */
-import { useState, useEffect, useCallback } from 'react';
-import { Search, ArrowUpDown } from 'lucide-react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { Search, ArrowUpDown, ListChecks, Clock, Loader, CheckCircle2, Plus } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { getTasks, createTask, updateTask, updateTaskStatus, deleteTask } from '../services/api';
@@ -17,29 +17,42 @@ import TaskCard from '../components/TaskCard';
 const LANE_STATUSES = ['Planned', 'In Progress', 'Complete'];
 
 const LANE_DOT_CLASS = {
-  'Planned':     'lane-dot lane-dot-planned',
+  'Planned': 'lane-dot lane-dot-planned',
   'In Progress': 'lane-dot lane-dot-progress',
-  'Complete':    'lane-dot lane-dot-complete',
+  'Complete': 'lane-dot lane-dot-complete',
 };
 
 const EMPTY_LANE_MESSAGES = {
-  'Planned':     'Nothing planned yet',
+  'Planned': 'Nothing planned yet',
   'In Progress': 'Nothing in progress',
-  'Complete':    'Nothing completed yet',
+  'Complete': 'Nothing completed yet',
 };
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
+function getFirstName(user) {
+  if (!user) return '';
+  if (user.name) return user.name.split(' ')[0];
+  return user.email?.split('@')[0] || '';
+}
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { showToast } = useToast();
-  const [tasks, setTasks]           = useState([]);
-  const [loading, setLoading]       = useState(true);
-  const [error, setError]           = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   // Client-side controls
-  const [searchQuery, setSearchQuery]   = useState('');
-  const [sortOrder, setSortOrder]       = useState('newest'); // 'newest' | 'oldest'
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState('newest'); // 'newest' | 'oldest'
   // Mobile tab — which lane is visible on narrow screens
-  const [mobileTab, setMobileTab]       = useState(''); // '' = All (shown for mobile UX)
+  const [mobileTab, setMobileTab] = useState(''); // '' = All (shown for mobile UX)
 
   const fetchTasks = useCallback(async () => {
     setLoading(true);
@@ -97,28 +110,81 @@ export default function Dashboard() {
         return sortOrder === 'newest' ? tB - tA : tA - tB;
       });
 
-  const counts = Object.fromEntries(
-    LANE_STATUSES.map((s) => [s, tasks.filter((t) => t.status === s).length])
+  const counts = useMemo(() =>
+    Object.fromEntries(
+      LANE_STATUSES.map((s) => [s, tasks.filter((t) => t.status === s).length])
+    ),
+    [tasks]
   );
 
   // Mobile: a lane is hidden when a specific tab is active and it's not this lane
   const isLaneHidden = (status) => mobileTab !== '' && mobileTab !== status;
+
+  const greeting = getGreeting();
+  const firstName = getFirstName(user);
 
   return (
     <div className="dashboard-page">
       <Navbar user={user} />
 
       <div className="dashboard-body">
-        {/* Page Heading */}
-        <h1 className="page-heading">Your tasks</h1>
+        {/* ── Dashboard Header ──────────────────────────────────────── */}
+        <div className="dashboard-header">
+          <div className="dashboard-header-left">
+            <h1 className="dashboard-greeting">
+              {greeting}{firstName ? `, ${firstName}` : ''}
+            </h1>
+            <p className="dashboard-subtitle">
+              {tasks.length === 0 && !loading
+                ? 'Create your first task to get started'
+                : `You have ${tasks.length} task${tasks.length !== 1 ? 's' : ''} across your board`
+              }
+            </p>
+          </div>
+        </div>
 
-        {/* Create task panel */}
+        {/* ── Stats Cards ──────────────────────────────────────────── */}
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-card-header">
+              <span className="stat-card-label">Total Tasks</span>
+              <ListChecks className="stat-card-icon" size={18} strokeWidth={1.5} />
+            </div>
+            <span className="stat-card-value">{tasks.length}</span>
+          </div>
+          <div className="stat-card">
+            <div className="stat-card-header">
+              <span className="stat-card-label">Planned</span>
+              <Clock className="stat-card-icon" size={18} strokeWidth={1.5} />
+            </div>
+            <span className="stat-card-value">{counts['Planned'] || 0}</span>
+          </div>
+          <div className="stat-card">
+            <div className="stat-card-header">
+              <span className="stat-card-label">In Progress</span>
+              <Loader className="stat-card-icon" size={18} strokeWidth={1.5} />
+            </div>
+            <span className="stat-card-value">{counts['In Progress'] || 0}</span>
+          </div>
+          <div className="stat-card">
+            <div className="stat-card-header">
+              <span className="stat-card-label">Completed</span>
+              <CheckCircle2 className="stat-card-icon" size={18} strokeWidth={1.5} />
+            </div>
+            <span className="stat-card-value">{counts['Complete'] || 0}</span>
+          </div>
+        </div>
+
+        {/* ── Create task panel ──────────────────────────────────────── */}
         <section className="create-panel" aria-label="Create a new task">
-          <span className="create-panel-label">New task</span>
+          <span className="create-panel-label">
+            <Plus size={13} strokeWidth={2.5} style={{ verticalAlign: '-2px', marginRight: '4px' }} />
+            New task
+          </span>
           <TaskForm onSubmit={handleCreate} />
         </section>
 
-        {/* Toolbar: search + sort + mobile filter tabs */}
+        {/* ── Toolbar: search + sort + mobile filter tabs ────────────── */}
         <div>
           <div className="board-toolbar">
             <div className="search-wrapper">
@@ -188,14 +254,18 @@ export default function Dashboard() {
         {/* Global zero-task state when no tasks exist at all */}
         {!loading && !error && tasks.length === 0 && (
           <div className="board-zero-state" role="status">
-            <p>No tasks yet — add your first one above</p>
+            <div className="empty-state-icon-large" aria-hidden="true">
+              <ListChecks size={28} strokeWidth={1.5} />
+            </div>
+            <p style={{ fontWeight: 500, marginBottom: '4px' }}>No tasks yet</p>
+            <p>Add your first task above to get started</p>
           </div>
         )}
 
         {/* Three-lane board */}
         <div className="board" role="main" aria-label="Task board">
           {loading ? (
-            // Skeleton loading: 2-3 placeholder cards per lane
+            // Skeleton loading: 2 placeholder cards per lane
             LANE_STATUSES.map((status) => (
               <section
                 key={status}

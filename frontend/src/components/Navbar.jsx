@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { CheckSquare, LogOut } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ user }) {
@@ -18,7 +19,9 @@ export default function Navbar({ user }) {
       <div className="navbar-inner">
         {/* Brand */}
         <a href="/dashboard" className="navbar-brand" aria-label="TaskTrac home">
-          <div className="navbar-brand-mark" aria-hidden="true">✓</div>
+          <div className="navbar-brand-mark" aria-hidden="true">
+            <CheckSquare size={15} strokeWidth={2.5} />
+          </div>
           TaskTrac
         </a>
 
@@ -47,6 +50,7 @@ export default function Navbar({ user }) {
             className="btn btn-outline btn-sm"
             aria-label="Sign out"
           >
+            <LogOut size={13} strokeWidth={2} />
             Sign out
           </button>
         </div>

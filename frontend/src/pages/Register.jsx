@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { registerUser } from '../services/api';
+import { CheckSquare, Zap, Shield, BarChart3 } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 
 const CLIENT_RULES = {
@@ -73,12 +74,28 @@ export default function Register() {
       {/* ── Brand panel ───────────────────────────────────────────────────── */}
       <div className="auth-brand-panel" aria-hidden="true">
         <div className="brand-content">
-          <div className="brand-logo-mark">✓</div>
+          <div className="brand-logo-mark">
+            <CheckSquare size={22} strokeWidth={2.5} />
+          </div>
           <h1 className="brand-app-name">TaskTrac</h1>
           <p className="brand-tagline">
             Manage your work with three statuses, zero noise, and a clean interface
             that stays out of your way.
           </p>
+          <div className="brand-features">
+            <div className="brand-feature">
+              <Zap className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Lightning-fast task creation & organization</span>
+            </div>
+            <div className="brand-feature">
+              <BarChart3 className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Visual progress tracking across your board</span>
+            </div>
+            <div className="brand-feature">
+              <Shield className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Secure authentication with Google SSO</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -90,13 +107,15 @@ export default function Register() {
 
         <div className="auth-form-panel-inner">
           <div className="auth-mobile-logo">
-            <div className="auth-mobile-mark" aria-hidden="true">✓</div>
+            <div className="auth-mobile-mark" aria-hidden="true">
+              <CheckSquare size={15} strokeWidth={2.5} />
+            </div>
             <span className="auth-mobile-name">TaskTrac</span>
           </div>
 
           <div>
             <h2 className="auth-form-title">Create account</h2>
-            <p className="auth-form-subtitle">Get started in seconds</p>
+            <p className="auth-form-subtitle">Get started in seconds — no credit card required</p>
           </div>
 
           {globalError && <div className="alert alert-error" role="alert">{globalError}</div>}

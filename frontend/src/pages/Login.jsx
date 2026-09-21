@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { googleSignIn, loginUser } from '../services/api';
+import { CheckSquare, Zap, Shield, BarChart3 } from 'lucide-react';
 import ThemeToggle from '../components/ThemeToggle';
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
@@ -70,12 +71,28 @@ export default function Login() {
       {/* ── Brand panel (left, desktop only) ─────────────────────────────── */}
       <div className="auth-brand-panel" aria-hidden="true">
         <div className="brand-content">
-          <div className="brand-logo-mark">✓</div>
+          <div className="brand-logo-mark">
+            <CheckSquare size={22} strokeWidth={2.5} />
+          </div>
           <h1 className="brand-app-name">TaskTrac</h1>
           <p className="brand-tagline">
             A focused task management tool built for engineers who prefer
             clarity over ceremony.
           </p>
+          <div className="brand-features">
+            <div className="brand-feature">
+              <Zap className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Lightning-fast task creation & organization</span>
+            </div>
+            <div className="brand-feature">
+              <BarChart3 className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Visual progress tracking across your board</span>
+            </div>
+            <div className="brand-feature">
+              <Shield className="brand-feature-icon" size={20} strokeWidth={1.5} />
+              <span>Secure authentication with Google SSO</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -89,13 +106,15 @@ export default function Login() {
         <div className="auth-form-panel-inner">
           {/* Mobile-only logo (brand panel is hidden on mobile) */}
           <div className="auth-mobile-logo">
-            <div className="auth-mobile-mark" aria-hidden="true">✓</div>
+            <div className="auth-mobile-mark" aria-hidden="true">
+              <CheckSquare size={15} strokeWidth={2.5} />
+            </div>
             <span className="auth-mobile-name">TaskTrac</span>
           </div>
 
           <div>
             <h2 className="auth-form-title">Sign in</h2>
-            <p className="auth-form-subtitle">Welcome back</p>
+            <p className="auth-form-subtitle">Welcome back — let's get to work</p>
           </div>
 
           {/* Google */}
